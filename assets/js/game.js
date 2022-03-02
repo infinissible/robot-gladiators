@@ -9,11 +9,6 @@ var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-console.log(enemyNames);
-console.log(enemyNames.length);
-console.log(enemyNames[0]);
-console.log(enemyNames[3]);
-
 var fight = function(enemyName) {
   // repeat and exceute as long as the enemy-robot is alive
   while (playerHealth > 0 && enemyHealth > 0) {
@@ -110,8 +105,6 @@ var startGame = function () {
     break;
    }  
   }
-  // play again
-  startGame();
 
   // after the loop ends, player is either out of health or enemies to fight, so run the endGame function
   endGame();
