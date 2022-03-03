@@ -1,25 +1,43 @@
-var fight = function(enemy) {  
-  // repeat and exceute as long as the enemy-robot is alive
-  while (playerInfo.health > 0 && enemy.health > 0) {
-    // ask player if they'd like to fight or run
-    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-    
-  // if player picks "skip" confirm and then stop the loop
-  if (promptFight === "skip" || promptFight === "SKIP") {
+var fightOrSkip = function() {
+  // ask player if they'd like to fight or skip using fightOrSkip function
+  var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter');
+
+  // Conditional Recursive Function Call
+  if (!promptFight) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return fightOrSkip();
+  }
+
+  //  if player picks "skip" confirm and then stop the loop
+  promptFight = promptFight.toLowerCase();
+
+  if (promptFight === "skip") {
     // confirm player wants to skip
     var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
+   
     // if yes (true), leave fight
     if (confirmSkip) {
       window.alert(playerInfo.name + " has decided to skip the fight. Goodbye!");
       // substract money from playerInfo.money for skipping
-      playerInfo.money = Math.max(playerInfo.money - 10);
-      console.log("playerInfo.money", playerInfo.money);
+      playerInfo.money = playerInfo.money - 10;
+
+      // return true if player wants to leave
+      return true;
+
+      shop();
+    }
+  }
+}
+
+var fight = function(enemy) {  
+  // repeat and exceute as long as the enemy-robot is alive
+  while (playerInfo.health > 0 && enemy.health > 0) {
+    // ask player if they'd like to fight or skip using fightOrSkip function
+    if (fightOrSkip()) {
+      // if true, leave fight by breaking loop
       break;
     }
-  } 
-    // remove enemy's health by substracting the amount set in the playerInfo.attack variable 
-    // generate random damage value based on player's attack power
+
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
     enemy.health = Math.max(0, enemy.health - damage);
